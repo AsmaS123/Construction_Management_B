@@ -1,5 +1,5 @@
 const express = require("express");
-const {   createExpensesInDetails,getClientExpenses } = require("../controllers/siteexpenses-controller");
+const {   createExpensesInDetails,getExpensesInDetails } = require("../controllers/siteexpenses-controller");
 const verifyToken  = require("../middleware/auth");
 
 const multer = require('multer');
@@ -9,5 +9,7 @@ const upload = multer({ storage });
 const siteExpensesRouter = express.Router();
 
 siteExpensesRouter.post("/create/:urlKey" ,verifyToken,upload.single('expenses[attachment]'), createExpensesInDetails);
-siteExpensesRouter.get("/:site" ,verifyToken, getClientExpenses);
+siteExpensesRouter.get("/:urlKey/:id" ,verifyToken, getExpensesInDetails);
+
+siteExpensesRouter.get("/:fileId" ,verifyToken, getExpensesInDetails);
 module.exports =  siteExpensesRouter;

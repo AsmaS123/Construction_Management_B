@@ -41,14 +41,17 @@ const ClientExpensesSchema = new mongoose.Schema({
 })
 
 const ContractorExpensesListSchema = new mongoose.Schema({
-  check_no: { type: String },
   bank_detail:{ type: String },
-  amount:{ type: Number},
-  date: { type: String },
-  payment_mode:{ type: String },
+  amount:{ type: Number,required: true},
+  date: { type: String,required: true },
   contractor_signature :  { type: String },
   engineer_signature:{ type: String },
-  attachment: { type: String },
+  attachment: { 
+    data: Buffer,
+    contentType: String,
+    name:String
+   },
+   payment_mode:{ type: String,required: true},
 })
 
 const ContractorExpensesSchema = new mongoose.Schema({
