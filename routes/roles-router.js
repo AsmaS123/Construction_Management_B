@@ -1,13 +1,19 @@
 const express = require("express");
-const {   updateRoles,userList ,getRolesByEmail,deleteUser} = require("../controllers/roles-controller");
-const verifyToken  = require("../middleware/auth");
+const authorize = require("../middleware/authorize");
+const {
+  updateRoles,
+  userList,
+  getRolesByEmail,
+  deleteUser,
+} = require("../controllers/roles-controller");
+const verifyToken = require("../middleware/auth");
 
 const rolesRouter = express.Router();
 
-rolesRouter.put("/:email",verifyToken, updateRoles);
-rolesRouter.delete("/:email",verifyToken, deleteUser);
-rolesRouter.get("/", verifyToken, userList);
-rolesRouter.get("/:email", verifyToken, getRolesByEmail);
+rolesRouter.put("/:email", verifyToken, authorize(["admin"]), updateRoles);
+rolesRouter.delete("/:email", verifyToken, authorize(["admin"]), deleteUser);
+rolesRouter.get("/", verifyToken, authorize(["superuser", "admin"]), userList);
+rolesRouter.get("/:email", verifyToken, authorize(["admin"]), getRolesByEmail);
 // teacherRouter.post("/login" , logIn);
 
-module.exports =  rolesRouter;
+module.exports = rolesRouter;
