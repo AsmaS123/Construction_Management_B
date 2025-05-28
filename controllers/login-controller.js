@@ -52,4 +52,22 @@ async function tokenGenerate(email, roles) {
   return token;
 }
 
-module.exports = { logIn };
+const refreshToken = async (req, res, next) => {
+  const token = req.cookies.refreshToken;
+  // req.email = decoded.email; // save user info to request object
+  // req.roles = decoded.roles;
+
+  if (!token) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+    if (err) return res.sendStatus(403); // Invalid token
+
+    const newAccessToken = tokenGenerate({
+      email: user.email,
+      roles: user.roles,
+    });
+    res.json({ accessToken: newAccessToken });
+  });
+};
+
+module.exports = { logIn, refreshToken };

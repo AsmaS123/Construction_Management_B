@@ -5,12 +5,13 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^9.26.0",
+    "eslint": "^9.27.0",
     "node-env-run": "^4.0.2",
     "nodemon": "^2.0.16",
     "prettier": "^3.5.3"
